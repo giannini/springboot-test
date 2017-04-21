@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->  
+    <property name="LOG_HOME" value="d:\\temp\\log\\maotai\\" />
+      
+    <!-- 控制台输出 -->   
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"> 
+             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>   
+        </encoder> 
+    </appender>
+    
+    <appender name="FILE_LOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>[%-5p]%d,[%c{0}], %m%n%rEx{3}</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_HOME}/all-%d{yyyy-MM-dd}.log.gz
+			</fileNamePattern>
+
+			<!-- keep 10 days' worth of history -->
+			<maxHistory>10</maxHistory>
+		</rollingPolicy>
+	</appender>
+    
+    <appender name="WEB_LOG"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
+         <encoder>
+            <pattern>[%-5p]%d,[%c{0}], %m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_HOME}/web-%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+
+            <!-- keep 90 days' worth of history -->
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+    </appender> 
+    
+    <appender name="COLLECTOR_LOG"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>[%-5p]%d,[%c{0}], %m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_HOME}/data_collector-%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+
+            <!-- keep 90 days' worth of history -->
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="DB_LOG"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>[%-5p]%d,[%c{0}], %m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_HOME}/db-%d{yyyy-MM-dd}.log.gz
+            </fileNamePattern>
+
+            <!-- keep 90 days' worth of history -->
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+	<logger name="org.hibernate" level="DEBUG" >
+		<appender-ref ref="DB_LOG" />
+	</logger>
+	
+	<logger name="com.maotai" level="DEBUG" >
+		<appender-ref ref="COLLECTOR_LOG"/>
+	</logger>
+	
+	<logger name="org.springframework.web" level="INFO" >
+		<appender-ref ref="WEB_LOG"/>
+	</logger>
+ 
+
+	<!-- 日志输出级别 -->
+	<root level="INFO">
+	    <appender-ref ref="STDOUT" />
+	    <appender-ref ref="FILE_LOG" />
+	</root> 
+    
+</configuration>
