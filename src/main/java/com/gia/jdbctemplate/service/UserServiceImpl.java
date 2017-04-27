@@ -14,7 +14,7 @@ import com.gia.jdbctemplate.dao.User;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	@Qualifier("primaryJdbcTemplate")
+	@Qualifier("masterJdbcTemplate")
 	private JdbcTemplate jdbcTemplate;
 
 	@Transactional

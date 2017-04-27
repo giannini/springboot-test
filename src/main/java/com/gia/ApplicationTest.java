@@ -19,12 +19,12 @@ public class ApplicationTest {
 	@Test
 	public void test() {
 
-		userSrv.create("Conan", 8);
-		userSrv.create("ccc", 29);
-		System.out.println("user count: " + userSrv.countUsers());
+		// userSrv.create("Conan", 8);
+		// userSrv.create("ccc", 29);
+		// System.out.println("user count: " + userSrv.countUsers());
 
-		userSrv.deleteByName("ccc");
-		System.out.println("user count: " + userSrv.countUsers());
+		// userSrv.deleteByName("ccc");
+		// System.out.println("user count: " + userSrv.countUsers());
 
 		for (User user : userSrv.getAllUsers()) {
 			System.out.println("id:" + user.getId() + "name:" + user.getName() + ", age:" + user.getAge());

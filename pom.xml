@@ -72,6 +72,18 @@
 	<dependency>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-jdbc</artifactId>
+	    <exclusions>
+	        <exclusion>
+	            <groupId>org.apache.tomcat</groupId>
+	            <artifactId>tomcat-jdbc</artifactId>
+	        </exclusion>
+    	</exclusions>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>druid</artifactId>
+	    <version>1.0.19</version>
 	</dependency>
 	
 	<!-- 
