@@ -2,26 +2,13 @@ package com.gia;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.gia.data.primary.UserRepository;
-import com.gia.factory.Factory;
-import com.gia.service.MessageService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(App.class)
 public class ApplicationTest {
-
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private MessageService msgService;
-
-	@Autowired
-	private Factory fac;
 
 	@Test
 	public void test() throws Exception {
@@ -52,12 +39,6 @@ public class ApplicationTest {
 		// ret = msgService.updateMessageNameById(14L, "rose");
 		// System.out.println("update id(14L): " + ret);
 		
-	}
-
-	@Test
-	public void testConfig()
-	{
-		System.out.println(fac.getSwitch());
 	}
 
 
