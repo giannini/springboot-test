@@ -57,11 +57,11 @@
 	</dependency>
 	
 	<dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-    
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>druid</artifactId>
+	    <version>1.0.19</version>
+	</dependency>
+	
   </dependencies>
 
 <!--  
