@@ -74,4 +74,9 @@ public class GuavaCacheServiceImpl {
         }
     }
 
+
+    public class AgentNotFoundException extends Exception {
+
+    }
+
 }

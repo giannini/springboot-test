@@ -1,9 +1,7 @@
 package com.gia;
 
-import com.gia.cache.AgentNotFoundException;
 import com.gia.cache.GuavaCacheServiceImpl;
 import com.gia.domain.Agent;
-import com.gia.domain.User;
 import com.gia.repository.AgentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.gia.service.MessageService;
 import com.gia.service.UserService;
 
-import javax.sound.midi.Soundbank;
 import java.util.concurrent.ExecutionException;
 
 
@@ -60,7 +57,6 @@ public class ApplicationTest {
     @Test
     public void testCache() throws  Exception {
         try {
-            System.out.println(AgentNotFoundException.class.getName());
             long id = cacheService.get("1827acef-127cfde");
 
             System.out.println(id);
