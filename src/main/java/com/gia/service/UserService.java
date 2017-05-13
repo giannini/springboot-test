@@ -13,4 +13,6 @@ public interface UserService {
 	void insertUserAndMessage(String name, int age, String content);
 
 	List<User> findAll();
+
+	void save(User user);
 }

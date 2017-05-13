@@ -1,5 +1,8 @@
 package com.gia;
 
+import com.gia.domain.Agent;
+import com.gia.domain.User;
+import com.gia.repository.AgentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class ApplicationTest {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private AgentRepository agentRepository;
+
 	@Test
 	public void test() throws Exception {
 		String name = "QiQi";
@@ -28,6 +34,24 @@ public class ApplicationTest {
 		String content = "123456789012345678901234567890";
 
 		userService.insertUserAndMessage(name, age, content);
+
+	}
+
+	@Test
+	public void addAgent() {
+
+		Agent a1 = new Agent("1827acef-127cfde", "123.56.234.67");
+		Agent a2 = new Agent("87364ace-567eac", "74.123.26.123");
+
+		agentRepository.save(a1);
+		agentRepository.save(a2);
+
+
+	}
+
+
+	@Test
+	public  void testCache() {
 
 	}
 

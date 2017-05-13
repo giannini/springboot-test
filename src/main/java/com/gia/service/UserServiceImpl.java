@@ -44,4 +44,7 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
+	public void save(User user) {
+		userRepository.save(user);
+	}
 }

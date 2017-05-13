@@ -26,4 +26,7 @@ public class MessageServiceImpl implements MessageService {
 		return messageRepository.findAll();
 	}
 
+	public void save(Message message) {
+		messageRepository.save(message);
+	}
 }
