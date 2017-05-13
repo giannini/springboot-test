@@ -12,4 +12,8 @@ public interface AgentRepository extends JpaRepository<Agent, Long> {
 
     @Query(value = "from Agent a where a.id=:id")
     Agent findAgent(@Param("id") long agentId);
+
+
+    @Query(value = "from Agent a where a.nodeId=:node_id")
+    Agent findAgentByNodeId(@Param("node_id") String nodeId);
 }
