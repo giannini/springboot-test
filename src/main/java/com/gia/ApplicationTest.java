@@ -1,5 +1,6 @@
 package com.gia;
 
+import com.alibaba.fastjson.JSON;
 import com.gia.cache.GuavaCacheServiceImpl;
 import com.gia.domain.Agent;
 import com.gia.repository.AgentRepository;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.gia.service.MessageService;
 import com.gia.service.UserService;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -67,6 +69,13 @@ public class ApplicationTest {
             System.out.println("catch AgentNotFoundException.");
         }
 
+    }
+    
+    @Test
+    public void testList() {
+
+        List<Long> ids = agentRepository.getAgentIdList(5);
+        System.out.println(JSON.toJSONString(ids));
     }
 
 
