@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.gia.service.MessageService;
 import com.gia.service.UserService;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -57,20 +59,20 @@ public class ApplicationTest {
 
 
     @Test
-    public void testCache() throws  Exception {
+    public void testCache() throws Exception {
         try {
             long id = cacheService.get("1827acef-127cfde");
 
             System.out.println(id);
 
             System.out.println(cacheService.get("18272ef-127cfde"));
-        }catch (ExecutionException e) {
+        } catch (ExecutionException e) {
             System.out.println(e.getMessage());
             System.out.println("catch AgentNotFoundException.");
         }
 
     }
-    
+
     @Test
     public void testList() {
 
@@ -78,5 +80,15 @@ public class ApplicationTest {
         System.out.println(JSON.toJSONString(ids));
     }
 
+
+    @Test
+    public void queryByDateTest() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.HOUR, -5);
+        Date time = cal.getTime();
+        System.out.println(time);
+        List<Long> ids = agentRepository.getAgentByDate(5, time);
+        System.out.println(JSON.toJSONString(ids));
+    }
 
 }

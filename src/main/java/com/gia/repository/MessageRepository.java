@@ -14,4 +14,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 	@Modifying
 	@Query(value = "update Message m set m.content=:content where id=:id")
 	void updateMessage(@Param("id") long id, @Param("content") String content);
+
+
 }
