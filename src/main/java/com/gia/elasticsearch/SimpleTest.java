@@ -54,11 +54,11 @@ public class SimpleTest {
 
         System.out.println();
         System.out.println("============================================");
-        searchAll(client);
+//        searchAll(client);
 
         System.out.println();
         System.out.println("============================================");
-        //searchKeyWord(client);
+        searchKeyWord(client);
 
         System.out.println();
         System.out.println("============================================");
@@ -182,7 +182,8 @@ public class SimpleTest {
     private static void searchKeyWord(Client client) {
         SearchResponse response = client.prepareSearch(index)
                 //查询所有字段匹配关键字
-                .setQuery(QueryBuilders.matchQuery("_all", "法国"))
+                //.setQuery(QueryBuilders.matchQuery("_all", "法国"))
+                .setQuery(QueryBuilders.matchQuery("origin", "法国"))
                 //设置最小匹配程度
 //                .setQuery(QueryBuilders.matchQuery("_all", "法国").minimumShouldMatch("100%"))
                 .execute().actionGet();
