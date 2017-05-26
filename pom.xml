@@ -61,7 +61,26 @@
 	    <artifactId>druid</artifactId>
 	    <version>1.0.19</version>
 	</dependency>
-	
+
+	  <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-test</artifactId>
+		  <version>1.5.3.RELEASE</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+	  </dependency>
+
+	  <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+	  <dependency>
+		  <groupId>com.alibaba</groupId>
+		  <artifactId>fastjson</artifactId>
+		  <version>1.2.32</version>
+	  </dependency>
+
+
+
   </dependencies>
 
 <!--  
@@ -94,7 +113,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<defaultLibBundleDir>lib</defaultLibBundleDir>
 					<source>1.5</source>
 					<target>1.5</target>
 					<encoding>UTF-8</encoding>
