@@ -24,17 +24,20 @@ import java.util.Map;
  */
 public class SofaClientTest {
 
-    private static final String index = "dtlog_12345";
+    private static final String index = "dtlog-3652-*-*-2017.06.01";
 
     private static final String type = "logs";
 
-    public static void main(String[] args) throws Exception {
-        Settings settings = Settings.builder()
-                .put("cluster.name", "elasticsearch").build();
-        TransportClient client = new PreBuiltTransportClient(settings)//(Settings.EMPTY)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+    private static String host = "172.16.10.86";
 
-        DateTime dateTime = new DateTime(2017, 5, 26, 00, 00, 00);
+    private static int port = 9300;
+
+    public static void main(String[] args) throws Exception {
+        Settings settings = Settings.builder().put("client.transport.ignore_cluster_name", true).build();
+        TransportClient client = new PreBuiltTransportClient(settings)//(Settings.EMPTY)
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(host), 9300));
+
+        DateTime dateTime = new DateTime(2017, 6, 1, 00, 00, 00);
         Map<String, String> cond = new HashMap<String, String>();
         //cond.put("method", "findDictByItem");
         cond.put("result_code", "01");
@@ -45,7 +48,7 @@ public class SofaClientTest {
 //        System.out.println();
 //        searchMethod(client, dateTime);
 //        System.out.println();
-        searchTrace(client, dateTime, 0, 20, cond);
+        searchTrace(client, dateTime, 1, 20, cond);
 //        System.out.println();
 //        searchTraceTree(client, "0a02105714931665516461012", dateTime);
 
@@ -173,11 +176,13 @@ public class SofaClientTest {
 
         SearchRequestBuilder responsebuilder = client.prepareSearch(index)
                 .setTypes(type).setFrom(page).setSize(size)
-                .setPostFilter(QueryBuilders.rangeQuery("@timestamp").gte(dateTime));
+                .setPostFilter(QueryBuilders.rangeQuery("@timestamp").gte(dateTime))
+                .setPostFilter(QueryBuilders.matchQuery("logtype.raw", "sofa-client-stats"));;
 
         for (Map.Entry<String, String> entry : cond.entrySet()) {
             System.out.println("add query " + entry.getKey() + ":" + entry.getValue());
             responsebuilder = responsebuilder.setQuery(QueryBuilders.matchQuery(entry.getKey(), entry.getValue()));
+            responsebuilder.setQuery(QueryBuilders.rangeQuery("").gt("200ms"));
         }
         SearchResponse response = responsebuilder
                 .setFetchSource(new String[]{"TraceId", "appname", "method", "service", "time", "result_code", "invoke_cost"}, null)
