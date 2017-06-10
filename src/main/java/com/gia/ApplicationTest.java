@@ -3,6 +3,7 @@ package com.gia;
 import com.alibaba.fastjson.JSON;
 import com.gia.cache.GuavaCacheServiceImpl;
 import com.gia.domain.Agent;
+import com.gia.redis.RedisService;
 import com.gia.repository.AgentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import com.gia.service.UserService;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 
@@ -34,6 +36,9 @@ public class ApplicationTest {
 
     @Autowired
     private GuavaCacheServiceImpl cacheService;
+
+    @Autowired
+    private RedisService redisService;
 
     @Test
     public void test() throws Exception {
@@ -89,6 +94,19 @@ public class ApplicationTest {
         System.out.println(time);
         List<Long> ids = agentRepository.getAgentByDate(5, time);
         System.out.println(JSON.toJSONString(ids));
+    }
+
+
+    @Test
+    public void redisTest() throws InterruptedException {
+        String uuid = "d08ac428-e493-43d5-af77-8bd1223f2552_filebeat";
+        Random rand = new Random();
+//        for (int i = 0; i < 10; i++) {
+//            redisService.write(uuid, rand.nextLong(), System.currentTimeMillis());
+//            Thread.sleep(999L);
+//        }
+
+        System.out.println(redisService.read(uuid));
     }
 
 }
