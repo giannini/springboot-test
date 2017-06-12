@@ -11,12 +11,16 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.joda.time.DateTime;
 
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,11 +28,11 @@ import java.util.Map;
  */
 public class SofaClientTest {
 
-    private static final String index = "dtlog-3652-*-*-2017.06.01";
+    private static final String index = "dtlog_2017.06.12";
 
     private static final String type = "logs";
 
-    private static String host = "172.16.10.86";
+    private static String host = "127.0.0.1";
 
     private static int port = 9300;
 
@@ -40,7 +44,7 @@ public class SofaClientTest {
         DateTime dateTime = new DateTime(2017, 6, 1, 00, 00, 00);
         Map<String, String> cond = new HashMap<String, String>();
         //cond.put("method", "findDictByItem");
-        cond.put("result_code", "01");
+        // cond.put("result_code", "01");
 
 //        searchAppname(client, dateTime);
 //        System.out.println();
@@ -48,11 +52,54 @@ public class SofaClientTest {
 //        System.out.println();
 //        searchMethod(client, dateTime);
 //        System.out.println();
-        searchTrace(client, dateTime, 1, 20, cond);
+        // searchTrace(client, dateTime, 1, 20, cond);
 //        System.out.println();
 //        searchTraceTree(client, "0a02105714931665516461012", dateTime);
+        thSofaTest(client);
 
         client.close();
+    }
+
+
+    public static void thSofaTest(TransportClient sofaEsClient) {
+        SearchRequestBuilder requestBuilder = sofaEsClient
+                .prepareSearch("dtlog_2017.06.12")
+                .setTypes("logs").setSize(10000)
+                .setQuery(QueryBuilders.matchQuery("log_type", "sofa-client-stats"));
+                //.setPostFilter(QueryBuilders.termQuery("log_type", "sofa-client-stats"));
+
+        String termName = "service.raw_" + "12345";
+        DateTime beginTime = DateTime.parse(DateTime.now().toString("yyyy-MM-dd")).toDateTime();
+
+        AggregationBuilder searchAgg = AggregationBuilders
+                .terms(termName).field("service.raw").size(10000);
+//        FilterAggregationBuilder filter = AggregationBuilders
+//                .filter("log_type", QueryBuilders.termQuery("log_type", "sofa-client-stats"));
+//        filter.subAggregation(searchAgg);
+
+        // xxx: 客户端文件搜索
+        requestBuilder = requestBuilder
+                //.setQuery(QueryBuilders.rangeQuery("@timestamp").gte(beginTime))
+                .addAggregation(searchAgg);
+        System.out.println("================");
+        System.out.println(requestBuilder.toString());
+
+        SearchResponse response = requestBuilder
+                .execute().actionGet();
+        System.out.println("=======");
+        System.out.println(response.toString());
+
+        List<String> ret = new LinkedList<String>();
+        if (response.getAggregations() == null) {
+            System.out.println("empty");
+        }
+        Terms term = response.getAggregations().get(termName);
+        for (Terms.Bucket entry : term.getBuckets()) {
+            String key = (String) entry.getKey();
+            ret.add(key);
+        }
+
+        System.out.println(JSON.toJSONString(ret));
     }
 
 
@@ -177,7 +224,8 @@ public class SofaClientTest {
         SearchRequestBuilder responsebuilder = client.prepareSearch(index)
                 .setTypes(type).setFrom(page).setSize(size)
                 .setPostFilter(QueryBuilders.rangeQuery("@timestamp").gte(dateTime))
-                .setPostFilter(QueryBuilders.matchQuery("logtype.raw", "sofa-client-stats"));;
+                .setPostFilter(QueryBuilders.matchQuery("logtype.raw", "sofa-client-stats"));
+        ;
 
         for (Map.Entry<String, String> entry : cond.entrySet()) {
             System.out.println("add query " + entry.getKey() + ":" + entry.getValue());
