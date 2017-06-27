@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @SpringBootApplication
+@ServletComponentScan
 @RestController
 public class App 
 {
