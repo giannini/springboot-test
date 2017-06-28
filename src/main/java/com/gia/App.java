@@ -19,20 +19,14 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        //System.out.println( "Hello World!" );
 		SpringApplication.run(App.class, args);
     }
 
-	@RequestMapping("/")
-	@ResponseBody
-	public String hello() {
-		return "hello";
-	}
-
-	@RequestMapping("/world")
-	@ResponseBody
-	@PreAuthorize("hasRole('ADMIN')")
-	public String world() {
-		return "world";
-	}
+//	@RequestMapping("/world")
+//	@ResponseBody
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public String world() {
+//		return "world";
+//	}
 }

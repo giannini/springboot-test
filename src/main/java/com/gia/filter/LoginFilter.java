@@ -14,8 +14,8 @@ import java.io.IOException;
 /**
  * Created by Fenglin on 2017/6/27.
  */
-@Order(1) //@Order注解表示执行过滤顺序，值越小，越先执行
-@WebFilter(filterName = "loginFilter", urlPatterns = "/*")
+//@Order(1) //@Order注解表示执行过滤顺序，值越小，越先执行
+//@WebFilter(filterName = "loginFilter", urlPatterns = "/*")
 //需要在spring-boot的入口处加注解@ServletComponentScan, 如果不指定，默认url-pattern是/*
 public class LoginFilter implements Filter {
 
