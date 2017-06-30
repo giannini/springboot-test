@@ -1,6 +1,7 @@
 package com.gia.conf;
 
-import com.gia.service.UserDetailServiceImpl;
+import com.gia.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,30 +12,40 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * Created by Giannini on 2017/6/27.
+ * Created by Fenglin on 2017/6/30.
  */
 @Configuration
-//@EnableWebSecurity //开启spring security功能
-//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-// prePostEnabled开启security注解
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true) // 启用注解
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Override
     @Bean
-    UserDetailsService UserDetailService() {
-        return new UserDetailServiceImpl();
+    public UserDetailsService userDetailsService(){
+        return new UserDetailsServiceImpl();       // 使用自定义 UserDetailsService
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(UserDetailService());
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService());
     }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
-                .and().logout().permitAll();
+                .antMatchers("/", "/homePage").permitAll()  // 允许所有人访问 "/" 和 "/homePage" 两个路径
+                .anyRequest().authenticated()          // 任何请求都需要被认证
+                .and()
+                .formLogin()
+                .loginPage("/loginPage").permitAll()  //  用户登录页面，允许所有人访问，未登录者访问禁止页面时自动跳转到该页面
+                .loginProcessingUrl("/login")        // 用户登录提交用户名密码表单时 POST 的路径
+                .defaultSuccessUrl("/adminPage")    // 登录成功自动跳转的路径
+                .and()
+                .logout()
+                .logoutUrl("/logout")              // 已登录用户登出操作 POST 的路径
+                .logoutSuccessUrl("/loginPage")     // 登出成功后自动跳转的路径
+                .invalidateHttpSession(true)
+        ;
     }
-
 }
