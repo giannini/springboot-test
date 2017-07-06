@@ -11,31 +11,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = {"","/homePage"}, method = RequestMethod.GET)
-    public String homePage(){
+    @RequestMapping(value = {"", "/homePage"}, method = RequestMethod.GET)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
+    public String homePage() {
         return "homePage";
     }
 
     @RequestMapping(value = "/adminPage", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String adminPage(){
+    public String adminPage() {
         return "adminPage";
     }
 
     @RequestMapping(value = "/userPage", method = RequestMethod.GET)
     @PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_USER')")
-    public String userPage(){
+    public String userPage() {
         return "userPage";
     }
 
-    @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
-    public String loginPage(){
+    @RequestMapping(value = {"/loginPage"}, method = RequestMethod.GET)
+    public String loginPage() {
         return "loginPage";
     }
 
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String forbiddenPage(){
+    public String forbiddenPage() {
         return "403";
     }
 }
