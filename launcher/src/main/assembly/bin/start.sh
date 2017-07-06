@@ -1,0 +1,1 @@
+java -Xms256m -Xmx256m -classpath "./lib/*:./*"  com.gia.App
