@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 		userRepository.updateUser(name, age);
 	}
 
-	@Transactional(value = "testEntityManagerFactory", isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
+	@Transactional
 	public void insertUserAndMessage(String name, int age, String content) {
 		User user = new User(name, age);
 		Message message = new Message(content, name);
