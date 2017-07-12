@@ -12,17 +12,17 @@
     <artifactId>launcher</artifactId>
     <dependencies>
 
-        <dependency>
-            <groupId>com.gia</groupId>
-            <artifactId>web1</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.gia</groupId>-->
+            <!--<artifactId>web1</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>com.gia</groupId>
-            <artifactId>web2</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.gia</groupId>-->
+            <!--<artifactId>web2</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
