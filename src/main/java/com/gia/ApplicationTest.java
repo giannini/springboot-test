@@ -20,9 +20,7 @@ import com.gia.service.UserService;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -84,7 +82,7 @@ public class ApplicationTest {
     public void testCriteriaQuery() throws ParseException {
         AgentSearchDTO agentSearch = new AgentSearchDTO();
         //agentSearch.setTag("tagbbb");
-       // agentSearch.setName("a");
+        // agentSearch.setName("a");
         //agentSearch.setAge(20);
         //agentSearch.setGroup("groupccc");
         String start = "2017-07-12 18:01:00";
@@ -95,6 +93,21 @@ public class ApplicationTest {
 
         List<Agent> agents = agentService.queryAgent(agentSearch);
         System.out.println(JSON.toJSONString(agents, SerializerFeature.SortField));
+    }
+
+    @Test
+    public void testQueryClause() {
+        String group = null;
+        List<Agent> agents = agentService.find(group);
+        System.out.println(JSON.toJSONString(agents));
+    }
+
+    @Test
+    public void testQueryIn() {
+        Set<Integer> ages =null;
+        List<Agent> agents = agentService.find(ages);
+        System.out.println(JSON.toJSONString(agents));
+
     }
 
 }

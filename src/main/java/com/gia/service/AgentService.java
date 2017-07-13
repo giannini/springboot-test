@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Author: Fenglin
@@ -48,6 +49,14 @@ public class AgentService {
     @Transactional
     public void insert(Agent agent) {
         agentRepository.save(agent);
+    }
+
+    public List<Agent> find(String group) {
+        return agentRepository.findAgentByGroup(group);
+    }
+
+    public List<Agent> find(Set<Integer> ages) {
+        return agentRepository.findAgentByAge(ages);
     }
 
     /**
