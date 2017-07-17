@@ -59,6 +59,10 @@ public class AgentService {
         return agentRepository.findAgentByAge(ages);
     }
 
+    public List<Agent> find(List<Integer> ages) {
+        return agentRepository.findByAgeIn(ages);
+    }
+
     /**
      * 动态生成where语句
      *

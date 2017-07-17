@@ -33,4 +33,6 @@ public interface AgentRepository extends JpaRepository<Agent, Long>, JpaSpecific
      */
     @Query(value = "from Agent a where a.age in :ages")
     List<Agent> findAgentByAge(@Param("ages")Set<Integer> ages);
+
+    List<Agent> findByAgeIn(List<Integer> ages);
 }

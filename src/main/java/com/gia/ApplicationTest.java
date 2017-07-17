@@ -104,9 +104,9 @@ public class ApplicationTest {
 
     @Test
     public void testQueryIn() {
-        Set<Integer> ages =null;
-        List<Agent> agents = agentService.find(ages);
-        System.out.println(JSON.toJSONString(agents));
+        List<Integer> ages = null;//new LinkedList<Integer>();
+        agentService.find(ages);
+        System.out.println(JSON.toJSONString(ages));
 
     }
 
